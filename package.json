@@ -1,0 +1,24 @@
+{
+  "name": "just-node",
+  "version": "1.0.0",
+  "description": "Learning node",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ti17m006/just-node.git"
+  },
+  "keywords": [
+    "nodejs",
+    "js",
+    "javascript"
+  ],
+  "author": "ti17m006",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ti17m006/just-node/issues"
+  },
+  "homepage": "https://github.com/ti17m006/just-node#readme"
+}
