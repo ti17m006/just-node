@@ -4,6 +4,7 @@
   "description": "Learning node",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
     "test": "npm test"
   },
   "repository": {
