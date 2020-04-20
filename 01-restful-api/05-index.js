@@ -2,7 +2,6 @@
 *	Working with payload
 */
 
-
 const PORT = process.env.PORT || 3000;
 
 const http = require('http');

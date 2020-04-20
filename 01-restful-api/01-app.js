@@ -2,4 +2,5 @@
 // module.exports = require('./02-index');
 // module.exports = require('./03-index');
 // module.exports = require('./04-index');
-module.exports = require('./05-index');
+// module.exports = require('./05-index');
+module.exports = require('./06-index');
