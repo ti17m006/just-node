@@ -11,7 +11,8 @@ const server = http.createServer(function (req, res) {
 	// Get the URL and parse it
 	// true is a parametar that
 	const parsedUrl = url.parse(req.url, true);
-	const path = parsedUrl.pathname(/^\|\/+$/g, '');
+	const path = parsedUrl.pathname;
+	const trimmedPath = path.replace(/^\|\/+$/g, '');
 	const queryStringObject = parsedUrl.query;
 	const httpMethod = req.method.toLowerCase();
 	const httpHeaders = req.headers;
