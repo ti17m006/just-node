@@ -5,6 +5,36 @@ const http = require('http');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 
+
+/***************************************************************/
+
+function firstHandler (data, callback) {
+	// Callback a http status code, and a payload object
+	callback(200, {
+		'name' : 'first handler'
+	});
+};
+
+function secondHandler (data, callback) {
+	callback(200, {
+		'name' : 'second handler'
+	});
+};
+
+function notFound (data, callback) {
+	callback(404);
+};
+
+
+// define a request router
+
+const router = {
+	'first': firstHandler,
+	'second': secondHandler
+};
+
+/***************************************************************/
+
 // create http server
 const server = http.createServer(function (req, res) {
 
@@ -28,17 +58,17 @@ const server = http.createServer(function (req, res) {
 		message = `Input {buffer}`;
 
 
-		const currentHandler = typeof(router[trimmedPath] !== 'undefined') ? router[trimmedPath] : handlers.notFound;
+		const currentHandler = typeof(router[trimmedPath] !== 'undefined') ? router[trimmedPath] : notFound;
 
 		const data = {
 			'trimmedPath': trimmedPath,	
 			'quertStringObject' : queryStringObject,
-			'method': method,
-			'headers' : headers,
+			'method': httpMethod,
+			'headers' : httpHeaders,
 			'payload': buffer
 		};
 
-		currentHandler(data, function(statusCode, payoad) {
+		currentHandler(data, function(statusCode, payload) {
 		
 			statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
 			payload = typeof(payload) == 'object' ? payload : {};
@@ -61,31 +91,3 @@ const server = http.createServer(function (req, res) {
 server.listen(PORT, function () {
 	console.log(`Server is running on a port ${PORT}`);
 });
-
-const handlers = {};
-
-
-handlers.first = function (data, callback) {
-	// Callback a http status code, and a payload object
-	callback(200, {
-		'name' : 'first handler'
-	});
-};
-
-handlers.second = function (data, callback) {
-	callback(200, {
-		'name' : 'second handler'
-	});
-};
-
-handlers.notFound = function (data, callback) {
-	callback(404);
-};
-
-
-// define a request router
-
-const router = {
-	'first': handlers.first,
-	'second': handlers.second
-}
