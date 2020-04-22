@@ -40,7 +40,7 @@ const server = http.createServer(function (req, res) {
 		currentHandler(data, function(statusCode, payoad) {
 		
 			statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
-			payload = typeof(payload) == 'object' : {};
+			payload = typeof(payload) == 'object' ? payload : {};
 
 			// payload that is responding
 			const payloadString = JSON.stringify(payload);
