@@ -7,21 +7,22 @@ const StringDecoder = require('string_decoder').StringDecoder;
 
 
 /***************************************************************/
+let handler = {}
 
-function firstHandler (data, callback) {
+handler.first = function (data, callback) {
 	// Callback a http status code, and a payload object
 	callback(200, {
-		'name' : 'first handler'
+		'name': 'first handler'
 	});
 };
 
-function secondHandler (data, callback) {
+handler.second = function (data, callback) {
 	callback(200, {
-		'name' : 'second handler'
+		'name': 'second handler'
 	});
 };
 
-function notFound (data, callback) {
+function notFound(data, callback) {
 	callback(404);
 };
 
@@ -29,8 +30,8 @@ function notFound (data, callback) {
 // define a request router
 
 const router = {
-	'first': firstHandler,
-	'second': secondHandler
+	'first': handler.first,
+	'second': handler.second
 };
 
 /***************************************************************/
@@ -42,7 +43,7 @@ const server = http.createServer(function (req, res) {
 	// true is a parametar that
 	const parsedUrl = url.parse(req.url, true);
 	const path = parsedUrl.pathname;
-	const trimmedPath = path.replace(/^\|\/+$/g, '');
+	const trimmedPath = path.replace(/^\/+|\/+$/g, '');
 	const queryStringObject = parsedUrl.query;
 	const httpMethod = req.method.toLowerCase();
 	const httpHeaders = req.headers;
@@ -58,20 +59,20 @@ const server = http.createServer(function (req, res) {
 		message = `Input {buffer}`;
 
 
-		const currentHandler = typeof(router[trimmedPath] !== 'undefined') ? router[trimmedPath] : notFound;
+		const currentHandler = typeof (router[trimmedPath] !== 'undefined') ? router[trimmedPath] : notFound;
 
 		const data = {
-			'trimmedPath': trimmedPath,	
-			'quertStringObject' : queryStringObject,
+			'trimmedPath': trimmedPath,
+			'quertStringObject': queryStringObject,
 			'method': httpMethod,
-			'headers' : httpHeaders,
+			'headers': httpHeaders,
 			'payload': buffer
 		};
 
-		currentHandler(data, function(statusCode, payload) {
-		
-			statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
-			payload = typeof(payload) == 'object' ? payload : {};
+		currentHandler(data, function (statusCode, payload) {
+
+			statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
+			payload = typeof (payload) == 'object' ? payload : {};
 
 			// payload that is responding
 			const payloadString = JSON.stringify(payload);
@@ -80,7 +81,7 @@ const server = http.createServer(function (req, res) {
 			res.end(payload);
 			console.log(`Response:\n status code: ${statusCode}\n payload ${payloadString}`);
 		});
-		
+
 		// res.end(message);
 		// console.log(message);
 	});
