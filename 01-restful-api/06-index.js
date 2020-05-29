@@ -59,7 +59,7 @@ const server = http.createServer(function (req, res) {
 		message = `Input {buffer}`;
 
 
-		const currentHandler = typeof (router[trimmedPath] !== 'undefined') ? router[trimmedPath] : notFound;
+		const currentHandler = typeof (router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : notFound;
 
 		const data = {
 			'trimmedPath': trimmedPath,
@@ -69,16 +69,16 @@ const server = http.createServer(function (req, res) {
 			'payload': buffer
 		};
 
-		currentHandler(data, function (statusCode, payload) {
 
+		currentHandler(data, function (statusCode, payload) {
 			statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
-			payload = typeof (payload) == 'object' ? payload : {};
+			payload = typeof (payload) == 'object' ? payload : new String();
 
 			// payload that is responding
 			const payloadString = JSON.stringify(payload);
 
-			res.writeHeas(statusCode);
-			res.end(payload);
+			res.writeHead(statusCode);
+			res.end(payloadString);
 			console.log(`Response:\n status code: ${statusCode}\n payload ${payloadString}`);
 		});
 
