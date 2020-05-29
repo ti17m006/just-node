@@ -74,7 +74,7 @@ const server = http.createServer(function (req, res) {
 			statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
 			payload = typeof (payload) == 'object' ? payload : new String();
 
-			// payload that is responding
+			// payload that is responding - must be a string!
 			const payloadString = JSON.stringify(payload);
 
 			res.writeHead(statusCode);
