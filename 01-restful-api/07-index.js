@@ -6,28 +6,31 @@ const StringDecoder = require('string_decoder').StringDecoder;
 
 // handlers
 
-handlerFirst = (callback) => {
+handlerFirst = (data, callback) => {
+    // Callback a http status code, and a payload object
     callback(200, {
-        'name': 'first handler'
+        'name': '8 - first handler'
     });
-}
+};
 
-handlerSecond = (callback) => {
+handlerSecond = (data, callback) => {
+    // Callback a http status code, and a payload object
     callback(200, {
-        'name': 'second handler'
+        'name': '8- second handler'
     });
-}
+};
 
-handlerNotFound = (callback) => {
+handlerNotFound = (data, callback) => {
+    // Callback a http status code, and a payload object
     callback(404, {
-        'name': 'Not found'
+        'name': '8 - not found handler'
     });
-}
+};
 
 const router = {
     'first': handlerFirst,
     'second': handlerSecond
-}
+};
 
 // create server
 
@@ -60,9 +63,9 @@ const server = http.createServer((req, res) => {
             'payload': buffer
         };
 
-        currnetHandler((statusCode, payload) => {
+        currnetHandler(data, (statusCode, payload) => {
             statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
-            payload = typeof (payload) == 'object' ? payload : new String();
+            payload = typeof (payload) == 'object' ? data.payload : new String();
             const payloadString = JSON.stringify(payload);
             //
             res.setHeader('Content-Type', 'application/json');
