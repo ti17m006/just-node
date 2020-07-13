@@ -12,6 +12,7 @@ const server = http.createServer(function (req, res) {
     // get the url and parse it\
     // "true" -> invokes "query string" module
     const parseUrl = url.parse(req.url, true);
+    // parseUrl is an object containing metadata keys
 
     // Get the url path
     // pathname alone is untrimmed
