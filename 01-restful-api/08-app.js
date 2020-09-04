@@ -13,7 +13,7 @@ handlerFirst = (data, callback) => {
 handlerSecond = (data, callback) => {
     // Callback a http status code, and a payload object
     callback(200, {
-        'name': '8- second handler'
+        'name': '8 - second handler'
     });
 };
 
